@@ -13,6 +13,9 @@ import java.time.LocalDate;
 @Table(name = "event_tag_mapping")
 public class EventTagMapping {
 
+//    @EmbeddedId
+//    private EventTagMappingId id;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull(message = "Event ID is required")
