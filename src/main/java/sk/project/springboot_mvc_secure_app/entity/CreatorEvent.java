@@ -11,27 +11,21 @@ public class CreatorEvent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CreatorEventID")
+    @Column(name = "creator_event_id")
     private Long creatorEventId;
 
     @NotNull(message = "Event ID is required")
-    @Column(name = "EventID", nullable = false)
+    @Column(name = "event_id", nullable = false)
     private Long eventId;
 
     @NotNull(message = "Creator ID is required")
-    @Column(name = "UserID", nullable = false)
+    @Column(name = "user_id", nullable = false)
     private Long userId;
 
-    @Column(name = "CreatedAt", nullable = false, updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDate createdAt;
 
     public CreatorEvent() {
-        this.createdAt = LocalDate.now();
-    }
-
-    public CreatorEvent(Long eventId, Long userId) {
-        this.eventId = eventId;
-        this.userId = userId;
         this.createdAt = LocalDate.now();
     }
 

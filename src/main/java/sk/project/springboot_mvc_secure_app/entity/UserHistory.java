@@ -11,18 +11,18 @@ public class UserHistory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "HistoryID")
+    @Column(name = "history_id")
     private Long historyId;
 
     @NotNull(message = "User ID is required")
-    @Column(name = "UserID", nullable = false)
+    @Column(name = "user_id", nullable = false)
     private Long userId;
 
     @NotNull(message = "Event ID is required")
-    @Column(name = "EventID", nullable = false)
+    @Column(name = "event_id", nullable = false)
     private Long eventId;
 
-    @Column(name = "CreatedAt", nullable = false, updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDate createdAt;
 
     public UserHistory() {

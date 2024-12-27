@@ -12,40 +12,40 @@ public class LearningCenter {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "LearningCenterId")
+    @Column(name = "learning_center_id")
     private Long learningCenterId;
 
     @NotBlank(message = "Name is required")
     @Size(min = 2, max = 100, message = "Name must be between 2 and 100 characters")
-    @Column(name = "Name", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @NotBlank(message = "Address is required")
     @Size(min = 10, max = 255, message = "Address must be between 10 and 255 characters")
-    @Column(name = "Address", nullable = false)
+    @Column(name = "address", nullable = false)
     private String address;
 
     @Min(value = 1, message = "Capacity must be at least 1")
-    @Column(name = "Capacity", nullable = false)
+    @Column(name = "capacity", nullable = false)
     private Integer capacity;
 
     @Pattern(regexp = "^\\+?[0-9]{10,20}$", message = "Phone number should be valid")
-    @Column(name = "Phone")
+    @Column(name = "phone")
     private String phone;
 
     @URL(message = "Webpage must be a valid URL")
-    @Column(name = "Webpage")
+    @Column(name = "webpage")
     private String webpage;
 
     @Email(message = "Email should be valid")
-    @Column(name = "Email")
+    @Column(name = "email")
     private String email;
 
     @PastOrPresent(message = "Established date cannot be in the future")
-    @Column(name = "EstablishedDate")
+    @Column(name = "established_date")
     private LocalDate establishedDate;
 
-    @Column(name = "CreatedAt", updatable = false)
+    @Column(name = "created_at", updatable = false)
     private LocalDate createdAt;
 
     public LearningCenter() {

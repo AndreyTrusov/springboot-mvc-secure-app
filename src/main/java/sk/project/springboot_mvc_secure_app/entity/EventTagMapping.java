@@ -25,19 +25,6 @@ public class EventTagMapping {
     public EventTagMapping() {
     }
 
-    public Long getTagId() {
-        return tagId;
-    }
-
-    public Long getEventId() {
-        return eventId;
-    }
-    public EventTagMapping(Long eventId, Long tagId, LocalDate mappedAt) {
-        this.eventId = eventId;
-        this.tagId = tagId;
-        this.mappedAt = mappedAt;
-    }
-
     public Long getTagMappingId() {
         return tagMappingId;
     }
@@ -46,8 +33,16 @@ public class EventTagMapping {
         this.tagMappingId = tagMappingId;
     }
 
+    public Long getEventId() {
+        return eventId;
+    }
+
     public void setEventId(Long eventId) {
         this.eventId = eventId;
+    }
+
+    public Long getTagId() {
+        return tagId;
     }
 
     public void setTagId(Long tagId) {

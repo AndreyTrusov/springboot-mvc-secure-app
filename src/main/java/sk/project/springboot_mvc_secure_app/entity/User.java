@@ -11,73 +11,61 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "UserID")
+    @Column(name = "user_id")
     private Long id;
 
     @NotBlank(message = "Name is required")
     @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters")
-    @Column(name = "Name")
+    @Column(name = "name")
     private String name;
 
     @NotBlank(message = "Email is required")
     @Email(message = "Email should be valid")
-    @Column(name = "Email", unique = true)
+    @Column(name = "email", unique = true)
     private String email;
 
     @NotBlank(message = "Password is required")
-    @Column(name = "PasswordHash")
+    @Column(name = "password_hash")
     private String passwordHash;
 
     @Pattern(regexp = "^[+\\d]{1,3}[\\s\\d]*$", message = "Phone number should be valid")
-    @Column(name = "PhoneNumber")
+    @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Column(name = "Company")
+    @Column(name = "company")
     private String company;
 
-    @Column(name = "JobTitle")
+    @Column(name = "job_title")
     private String jobTitle;
 
     @ManyToOne
-    @JoinColumn(name = "RoleID", referencedColumnName = "RoleID")
+    @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private Role role;
 
-    @Column(name = "CreatedAt", updatable = false)
+    @Column(name = "created_at", updatable = false)
     private LocalDate createdAt;
 
-    @Column(name = "IsActive")
+    @Column(name = "is_active")
     private Boolean isActive;
 
-    @Column(name = "LastLogin")
+    @Column(name = "last_login")
     private LocalDate lastLogin;
 
-    @Column(name = "ProfilePicture")
+    @Column(name = "profile_picture")
     private String profilePicture;
 
-    @Column(name = "Address")
+    @Column(name = "address")
     private String address;
 
-    @Column(name = "Gender")
+    @Column(name = "gender")
     private String gender;
 
-    @Column(name = "DateOfBirth")
+    @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
 
-    public User(String name, String email, String passwordHash, String phoneNumber, String company, String jobTitle, Role role, LocalDate createdAt, Boolean isActive, LocalDate lastLogin, String profilePicture, String address, String gender, LocalDate dateOfBirth) {
-        this.name = name;
-        this.email = email;
-        this.passwordHash = passwordHash;
-        this.phoneNumber = phoneNumber;
-        this.company = company;
-        this.jobTitle = jobTitle;
-        this.role = role;
+    public User() {
         this.createdAt = LocalDate.now();
-        this.isActive = isActive;
-        this.lastLogin = LocalDate.now();
-        this.profilePicture = profilePicture;
-        this.address = address;
-        this.gender = gender;
-        this.dateOfBirth = dateOfBirth;
+        this.isActive = true;
     }
 
     public Long getId() {
@@ -198,11 +186,6 @@ public class User {
 
     public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
-    }
-
-    public User() {
-        this.createdAt = LocalDate.now();
-        this.isActive = true;
     }
 }
 

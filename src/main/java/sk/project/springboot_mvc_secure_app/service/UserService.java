@@ -9,8 +9,8 @@ public interface UserService {
     List<User> findAll();
     List<User> findAllActiveUsers();
     Optional<User> findById(Long id);
-    User findByEmail(String email);
+    Optional<User> findByEmail(String email);
     User findByName(String name);
-    User save(User user);
+    User save(User user, String password_1, String password_2);
     boolean deleteById(Long id);
 }

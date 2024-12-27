@@ -12,42 +12,42 @@ public class EventSchedule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ScheduleID")
+    @Column(name = "schedule_id")
     private Long scheduleId;
 
     @NotNull(message = "Event ID is required")
-    @Column(name = "EventID", nullable = false)
+    @Column(name = "event_id", nullable = false)
     private Long eventId;
 
     @NotNull(message = "Learning Center ID is required")
-    @Column(name = "LearningCenterID", nullable = false)
+    @Column(name = "learning_center_id", nullable = false)
     private Long learningCenterId;
 
     @NotNull(message = "Start date is required")
     @FutureOrPresent(message = "Start date cannot be in the past")
-    @Column(name = "StartDate", nullable = false)
+    @Column(name = "start_date", nullable = false)
     private LocalDate startDate;
 
     @NotNull(message = "End date is required")
     @Future(message = "End date must be in the future")
-    @Column(name = "EndDate", nullable = false)
+    @Column(name = "end_date", nullable = false)
     private LocalDate endDate;
 
     @Min(value = 1, message = "Duration must be at least 1 minute")
-    @Column(name = "Duration", nullable = false)
+    @Column(name = "duration", nullable = false)
     private Integer duration;
 
     @Min(value = 1, message = "Max tickets must be at least 1")
-    @Column(name = "MaxTickets", nullable = false)
+    @Column(name = "max_tickets", nullable = false)
     private Integer maxTickets;
 
     @NotNull(message = "Ticket price is required")
     @DecimalMin(value = "0.0", inclusive = true, message = "Ticket price must be at least 0")
     @Digits(integer = 8, fraction = 2, message = "Ticket price must be a valid monetary value")
-    @Column(name = "TicketPrice", nullable = false)
+    @Column(name = "ricket_price", nullable = false)
     private BigDecimal ticketPrice;
 
-    @Column(name = "CreatedAt", updatable = false)
+    @Column(name = "created_at", updatable = false)
     private LocalDate createdAt;
 
     public EventSchedule() {

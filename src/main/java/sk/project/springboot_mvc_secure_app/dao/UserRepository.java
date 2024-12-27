@@ -5,11 +5,12 @@ import org.springframework.stereotype.Repository;
 import sk.project.springboot_mvc_secure_app.entity.User;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByName(String name);
-    User findByEmail(String email);
+    Optional<User> findByEmail(String email);
     List<User> findAllByIsActiveTrue();
     User save(User user);
 }

@@ -9,12 +9,12 @@ public class Tag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "TagID")
+    @Column(name = "tag_id")
     private Long tagId;
 
     @NotBlank(message = "Tag name is required")
-    @Size(max = 100, message = "Tag name cannot exceed 100 characters")
-    @Column(name = "Name", length = 100, nullable = false, unique = true)
+    @Size(max = 50, message = "Tag name cannot exceed 50 characters")
+    @Column(name = "name", length = 100, nullable = false, unique = true)
     private String name;
 
     public Long getTagId() {

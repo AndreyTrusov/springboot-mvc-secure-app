@@ -22,39 +22,13 @@
     </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/events">Events App</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/events">Events</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Locations</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/user/profile">Profile</a>
-                </li>
-            </ul>
+<div th:replace="~{menu :: menu}"></div>
 
-            <form class="ms-auto" action="#" th:action="@{/logout}" method="POST">
-                <button class="btn btn-light btn-sm ms-auto" type="submit" >
-                    Log Out
-                </button>
-            </form>
-        </div>
-    </div>
-</nav>
+<!--Role(s): <span sec:authentication="principal.authorities"></span>-->
 
 <div class="container">
+    <p class="text-center mt-3 text-success" th:if="${param.loggedin}">You have been registered</p>
     <h1 class="mb-4">Public Events</h1>
-
-<!--    <span sec:authentication="principal.username"></span>-->
-<!--    <span sec:authentication="principal.authorities"></span>-->
 
     <div class="row">
         <div th:each="event : ${events}" class="col-md-4">

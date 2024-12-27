@@ -6,15 +6,11 @@
     <style>
         body {
             background-color: #f8f9fa;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
         }
 
         .card {
             width: 400px;
-            margin: auto;
+            margin: 80px auto;
             border: 1px solid #ddd;
             border-radius: 8px;
         }
@@ -31,6 +27,8 @@
     </style>
 </head>
 <body>
+<div th:replace="~{menu :: menu}"></div>
+
 <div class="card shadow">
     <div class="card-header">
         <h1 class="h4 mb-0">Login</h1>
@@ -49,8 +47,8 @@
                 <button type="submit" class="btn btn-primary">Login</button>
             </div>
         </form>
-        <p th:if="${param.error}" class="text-danger mt-3">Invalid username or password</p>
-        <p th:if="${param.logout}" class="text-success mt-3">You have been logged out</p>
+        <p class="text-center mt-3 text-danger" th:if="${param.error}">Invalid username or password</p>
+        <p class="text-center mt-3 text-success" th:if="${param.logout}">You have been logged out</p>
     </div>
     <div class="card-footer">
         <p class="mb-2">Don't have an account?</p>

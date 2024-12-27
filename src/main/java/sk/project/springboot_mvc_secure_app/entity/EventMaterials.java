@@ -11,31 +11,31 @@ public class EventMaterials {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "MaterialsID")
+    @Column(name = "materials_id")
     private Long materialsId;
 
     @NotNull(message = "Event ID is required")
-    @Column(name = "EventID", nullable = false)
+    @Column(name = "event_id", nullable = false)
     private Long eventId;
 
     @NotBlank(message = "Description is required")
     @Size(max = 255, message = "Description cannot exceed 255 characters")
-    @Column(name = "Description", length = 255, nullable = false)
+    @Column(name = "description", length = 255, nullable = false)
     private String description;
 
     @Size(max = 500, message = "File path cannot exceed 500 characters")
-    @Column(name = "FilePath", length = 500)
+    @Column(name = "file_path", length = 500)
     private String filePath;
 
     @Size(max = 500, message = "Link cannot exceed 500 characters")
-    @Column(name = "Link", length = 500)
+    @Column(name = "link", length = 500)
     private String link;
 
     @Size(max = 50, message = "File Type cannot exceed 50 characters")
-    @Column(name = "FileType", length = 500)
+    @Column(name = "file_type", length = 500)
     private String fileType;
 
-    @Column(name = "UploadedAt", nullable = false, updatable = false)
+    @Column(name = "uploaded_at", nullable = false, updatable = false)
     private LocalDate uploadedAt;
 
     public EventMaterials() {

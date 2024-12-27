@@ -11,40 +11,31 @@ public class EventFeedback {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "FeedbackId")
+    @Column(name = "feedback_id")
     private Long feedbackId;
 
     @NotNull(message = "Event ID is required")
-    @Column(name = "EventId", nullable = false)
+    @Column(name = "event_id", nullable = false)
     private Long eventId;
 
     @NotNull(message = "User ID is required")
-    @Column(name = "UserId", nullable = false)
+    @Column(name = "user_id", nullable = false)
     private Long userId;
 
-    @Column(name = "Feedback", length = 255)
+    @Column(name = "feedback", length = 255)
     private String feedback;
 
     @NotNull(message = "Rating is required")
-    @Column(name = "Rating", nullable = false)
+    @Column(name = "rating", nullable = false)
     private Integer rating;
 
-    @Column(name = "IsAnonymous", nullable = false)
+    @Column(name = "is_anonymous", nullable = false)
     private Boolean isAnonymous = false;
 
-    @Column(name = "CreatedAt", nullable = false, updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDate createdAt;
 
     public EventFeedback() {
-        this.createdAt = LocalDate.now();
-    }
-
-    public EventFeedback(Long eventId, Long userId, String feedback, Integer rating, Boolean isAnonymous) {
-        this.eventId = eventId;
-        this.userId = userId;
-        this.feedback = feedback;
-        this.rating = rating;
-        this.isAnonymous = isAnonymous;
         this.createdAt = LocalDate.now();
     }
 

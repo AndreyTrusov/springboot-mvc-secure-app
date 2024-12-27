@@ -14,8 +14,6 @@ import sk.project.springboot_mvc_secure_app.service.UserService;
 @Controller
 public class AuthController {
 
-    @Autowired
-    private UserService userService;
 
     @GetMapping("/login")
     public String login() {
@@ -36,15 +34,5 @@ public class AuthController {
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new User());
         return "register";
-    }
-
-    @PostMapping("/register")
-    public String registerUser(@Valid @ModelAttribute("user") User user, BindingResult result) {
-        if (result.hasErrors()) {
-            return "register";
-        }
-
-        userService.save(user);
-        return "redirect:/login?registered";
     }
 }

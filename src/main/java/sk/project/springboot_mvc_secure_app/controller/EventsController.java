@@ -12,7 +12,8 @@ import java.util.List;
 @Controller
 public class EventsController {
 
-    private final EventService eventService;
+    @Autowired
+    private EventService eventService;
 
     @Autowired
     public EventsController(EventService eventService) {
@@ -36,9 +37,4 @@ public class EventsController {
 
         return "events";
     }
-
-//    @GetMapping("/events")
-//    public String showEventsPage() {
-//        return "events";
-//    }
 }

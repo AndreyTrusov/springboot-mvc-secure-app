@@ -11,19 +11,20 @@ public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "RoleID")
+    @Column(name = "role_id")
     private Long roleId;
 
     @NotBlank(message = "Role name is required")
     @Size(min = 2, max = 50, message = "Role name must be between 2 and 50 characters")
-    @Column(name = "RoleName")
+    @Column(name = "role_name")
     private String roleName;
 
-    @Column(name = "Description")
+    @Column(name = "created_at", updatable = false)
+    private LocalDate createdAt;
+
+    @Column(name = "description")
     private String description;
 
-    @Column(name = "CreatedAt", updatable = false)
-    private LocalDate createdAt;
 
     public Role() {
         this.createdAt = LocalDate.now();
@@ -45,20 +46,20 @@ public class Role {
         this.roleName = roleName;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public LocalDate getCreatedAt() {
         return createdAt;
     }
 
     public void setCreatedAt(LocalDate createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override

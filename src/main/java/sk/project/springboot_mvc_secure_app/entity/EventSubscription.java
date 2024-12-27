@@ -11,33 +11,26 @@ public class EventSubscription {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "SubscriptionID")
+    @Column(name = "subscription_id")
     private Long subscriptionId;
 
     @NotNull(message = "User ID is required")
-    @Column(name = "UserID", nullable = false)
+    @Column(name = "user_id", nullable = false)
     private Long userId;
 
     @NotNull(message = "Event ID is required")
-    @Column(name = "EventID", nullable = false)
+    @Column(name = "event_id", nullable = false)
     private Long eventId;
 
-    @Column(name = "StartedAt", nullable = false, updatable = false)
+    @Column(name = "started_at", nullable = false, updatable = false)
     private LocalDate startedAt;
 
-    @Column(name = "Active", nullable = false)
+    @Column(name = "active", nullable = false)
     private Boolean active;
 
     public EventSubscription() {
         this.startedAt = LocalDate.now();
         this.active = true;
-    }
-
-    public EventSubscription(Long userId, Long eventId, Boolean active) {
-        this.userId = userId;
-        this.eventId = eventId;
-        this.startedAt = LocalDate.now();
-        this.active = active;
     }
 
     public Long getSubscriptionId() {
