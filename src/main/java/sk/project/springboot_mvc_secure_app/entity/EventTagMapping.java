@@ -1,38 +1,65 @@
 package sk.project.springboot_mvc_secure_app.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDate;
 
-@Setter
-@Getter
 @Entity
 @Table(name = "event_tag_mapping")
 public class EventTagMapping {
 
-//    @EmbeddedId
-//    private EventTagMappingId id;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull(message = "Event ID is required")
-    @Column(name = "EventID", nullable = false)
+    @Column(name = "tag_mapping_id", nullable = false)
+    private Long tagMappingId;
+
+    @Column(name = "event_id", nullable = false)
     private Long eventId;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull(message = "Tag ID is required")
-    @Column(name = "TagID", nullable = false)
+    @Column(name = "tag_id", nullable = false)
     private Long tagId;
 
-    @Column(name = "MappedAt", nullable = false, updatable = false)
+    @Column(name = "mapped_at", updatable = false)
     private LocalDate mappedAt;
 
     public EventTagMapping() {
-        this.mappedAt = LocalDate.now();
+    }
+
+    public Long getTagId() {
+        return tagId;
+    }
+
+    public Long getEventId() {
+        return eventId;
+    }
+    public EventTagMapping(Long eventId, Long tagId, LocalDate mappedAt) {
+        this.eventId = eventId;
+        this.tagId = tagId;
+        this.mappedAt = mappedAt;
+    }
+
+    public Long getTagMappingId() {
+        return tagMappingId;
+    }
+
+    public void setTagMappingId(Long tagMappingId) {
+        this.tagMappingId = tagMappingId;
+    }
+
+    public void setEventId(Long eventId) {
+        this.eventId = eventId;
+    }
+
+    public void setTagId(Long tagId) {
+        this.tagId = tagId;
+    }
+
+    public LocalDate getMappedAt() {
+        return mappedAt;
+    }
+
+    public void setMappedAt(LocalDate mappedAt) {
+        this.mappedAt = mappedAt;
     }
 
     @Override

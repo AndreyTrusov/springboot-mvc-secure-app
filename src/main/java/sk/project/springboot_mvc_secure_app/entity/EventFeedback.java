@@ -2,13 +2,9 @@ package sk.project.springboot_mvc_secure_app.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDate;
 
-@Setter
-@Getter
 @Entity
 @Table(name = "event_feedback")
 public class EventFeedback {
@@ -50,6 +46,62 @@ public class EventFeedback {
         this.rating = rating;
         this.isAnonymous = isAnonymous;
         this.createdAt = LocalDate.now();
+    }
+
+    public Long getFeedbackId() {
+        return feedbackId;
+    }
+
+    public void setFeedbackId(Long feedbackId) {
+        this.feedbackId = feedbackId;
+    }
+
+    public @NotNull(message = "Event ID is required") Long getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(@NotNull(message = "Event ID is required") Long eventId) {
+        this.eventId = eventId;
+    }
+
+    public @NotNull(message = "User ID is required") Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(@NotNull(message = "User ID is required") Long userId) {
+        this.userId = userId;
+    }
+
+    public String getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(String feedback) {
+        this.feedback = feedback;
+    }
+
+    public @NotNull(message = "Rating is required") Integer getRating() {
+        return rating;
+    }
+
+    public void setRating(@NotNull(message = "Rating is required") Integer rating) {
+        this.rating = rating;
+    }
+
+    public Boolean getAnonymous() {
+        return isAnonymous;
+    }
+
+    public void setAnonymous(Boolean anonymous) {
+        isAnonymous = anonymous;
+    }
+
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override

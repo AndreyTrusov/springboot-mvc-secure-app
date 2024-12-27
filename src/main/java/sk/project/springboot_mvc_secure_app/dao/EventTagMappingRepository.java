@@ -13,10 +13,11 @@ import java.util.List;
 @Repository
 public interface EventTagMappingRepository extends JpaRepository<EventTagMapping, Long> {
     List<EventTagMapping> findByEventId(Long eventId);
+
     List<EventTagMapping> findByTagId(Long tagId);
 
+    boolean existsByEventId(Long eventId);
+
     @Transactional
-    @Modifying
-    @Query("DELETE FROM EventTagMapping et WHERE et.eventId = :eventId")
-    boolean deleteByEventId(@Param("eventId") Long eventId);
+    int deleteByEventId(Long eventId);
 }

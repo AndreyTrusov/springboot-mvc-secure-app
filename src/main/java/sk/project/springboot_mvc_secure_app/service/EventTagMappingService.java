@@ -6,7 +6,12 @@ import java.util.List;
 
 public interface EventTagMappingService {
     List<EventTagMapping> findByEventId(Long eventId);
+
     List<EventTagMapping> findByTagId(Long tagId);
+
     EventTagMapping save(EventTagMapping eventTagMapping);
+
     boolean deleteByEventId(Long eventId);
+
+    boolean deleteById(Long tagMappingId);
 }

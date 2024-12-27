@@ -2,41 +2,85 @@ package sk.project.springboot_mvc_secure_app.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDate;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "event")
 public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "EventID")
+    @Column(name = "event_id")
     private Long eventId;
 
     @NotBlank(message = "Event name is required")
     @Size(min = 3, max = 100, message = "Event name must be between 3 and 100 characters")
-    @Column(name = "Name", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "IsPrivate", nullable = false)
+    @Column(name = "is_private", nullable = false)
     private Boolean isPrivate = false;
 
-    @Column(name = "CreatedBy", nullable = false)
+    @Column(name = "created_by", nullable = false)
     private Long createdBy;
 
-    @Column(name = "Description")
+    @Column(name = "description")
     private String description;
 
-    @Column(name = "CreatedAt", updatable = false)
+    @Column(name = "created_at", updatable = false)
     private LocalDate createdAt;
 
     public Event() {
         this.createdAt = LocalDate.now();
+    }
+
+    public Long getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(Long eventId) {
+        this.eventId = eventId;
+    }
+
+    public @NotBlank(message = "Event name is required") @Size(min = 3, max = 100, message = "Event name must be between 3 and 100 characters") String getName() {
+        return name;
+    }
+
+    public void setName(@NotBlank(message = "Event name is required") @Size(min = 3, max = 100, message = "Event name must be between 3 and 100 characters") String name) {
+        this.name = name;
+    }
+
+    public Boolean getPrivate() {
+        return isPrivate;
+    }
+
+    public void setPrivate(Boolean aPrivate) {
+        isPrivate = aPrivate;
+    }
+
+    public Long getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Long createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override

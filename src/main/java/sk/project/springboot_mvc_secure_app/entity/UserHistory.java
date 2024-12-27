@@ -2,13 +2,9 @@ package sk.project.springboot_mvc_secure_app.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDate;
 
-@Setter
-@Getter
 @Entity
 @Table(name = "user_history")
 public class UserHistory {
@@ -31,6 +27,38 @@ public class UserHistory {
 
     public UserHistory() {
         this.createdAt = LocalDate.now();
+    }
+
+    public Long getHistoryId() {
+        return historyId;
+    }
+
+    public void setHistoryId(Long historyId) {
+        this.historyId = historyId;
+    }
+
+    public @NotNull(message = "User ID is required") Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(@NotNull(message = "User ID is required") Long userId) {
+        this.userId = userId;
+    }
+
+    public @NotNull(message = "Event ID is required") Long getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(@NotNull(message = "Event ID is required") Long eventId) {
+        this.eventId = eventId;
+    }
+
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override

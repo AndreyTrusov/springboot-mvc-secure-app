@@ -2,8 +2,11 @@ package sk.project.springboot_mvc_secure_app.service;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import sk.project.springboot_mvc_secure_app.dao.RoleRepository;
 import sk.project.springboot_mvc_secure_app.dao.UserRepository;
+import sk.project.springboot_mvc_secure_app.entity.Role;
 import sk.project.springboot_mvc_secure_app.entity.User;
 
 import java.util.List;
@@ -36,6 +39,11 @@ public class UserServiceImpl implements UserService {
         }
 
         return userRepository.findById(id);
+    }
+
+    @Override
+    public User findByName(String name) {
+        return userRepository.findByName(name);
     }
 
     @Override
