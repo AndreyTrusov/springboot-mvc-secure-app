@@ -45,15 +45,17 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.csrf().ignoringRequestMatchers("/register");
-        http.csrf().ignoringRequestMatchers("/user");
+//        http.csrf().ignoringRequestMatchers("/register");
+//        http.csrf().ignoringRequestMatchers("/user");
+//        http.csrf().ignoringRequestMatchers("/admin");
 
         http.authorizeHttpRequests(configurer -> configurer
-                                .requestMatchers("/events/**", "/register/**").permitAll()
+                                .requestMatchers("/events/**", "/register/**", "/not-found").permitAll()
                                 .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN", "CREATOR")
-                                .requestMatchers("/register/**").hasAnyRole("USER", "ADMIN", "CREATOR")
-                                .requestMatchers("/events/**").hasAnyRole("USER", "ADMIN", "CREATOR")
-                                .requestMatchers("/error/**").hasAnyRole("USER", "ADMIN", "CREATOR")
+                                .requestMatchers("/admin/**").hasRole("ADMIN")
+//                                .requestMatchers("/register/**").hasAnyRole("USER", "ADMIN", "CREATOR")
+//                                .requestMatchers("/events/**").hasAnyRole("USER", "ADMIN", "CREATOR")
+//                                .requestMatchers("/error/**").hasAnyRole("USER", "ADMIN", "CREATOR")
                                 .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -72,7 +74,8 @@ public class SecurityConfig {
                 )
                 .exceptionHandling(handling -> handling
                         .accessDeniedPage("/access-denied")
-                );
+                )
+                .csrf().disable();
 
         return http.build();
     }

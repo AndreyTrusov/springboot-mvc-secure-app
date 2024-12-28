@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import sk.project.springboot_mvc_secure_app.dto.AdminProfileDTO;
 import sk.project.springboot_mvc_secure_app.dto.UserPasswordDTO;
 import sk.project.springboot_mvc_secure_app.dto.UserProfileDTO;
 import sk.project.springboot_mvc_secure_app.entity.User;

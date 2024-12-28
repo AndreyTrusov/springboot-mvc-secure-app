@@ -50,8 +50,7 @@
                     </div>
 
                     <form action="#" th:action="@{/user/profile/info}" method="POST" th:object="${user}">
-<!--                        <input type="hidden" th:field="*{id}">-->
-                        <input th:field="*{id}">
+                        <input type="hidden" th:field="*{id}">
                         <div class="mb-3">
                             <label for="name" class="form-label">Name</label>
                             <input type="text" class="form-control" id="name" th:field="*{name}">
@@ -115,8 +114,7 @@
                     </div>
 
                     <form th:action="@{/user/profile/password}" th:object="${userPasswordDTO}" method="post">
-<!--                        <input type="hidden" th:field="*{id}">-->
-                        <input th:field="*{id}">
+                        <input type="hidden" th:field="*{id}">
                         <div class="mb-3">
                             <label for="oldPassword" class="form-label">Old Password</label>
                             <input type="password" class="form-control" id="oldPassword" th:field="*{oldPassword}" required>

@@ -9,6 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import sk.project.springboot_mvc_secure_app.dto.AdminProfileDTO;
 import sk.project.springboot_mvc_secure_app.dto.UserPasswordDTO;
 import sk.project.springboot_mvc_secure_app.dto.UserProfileDTO;
 import sk.project.springboot_mvc_secure_app.dao.UserRepository;
@@ -16,8 +17,10 @@ import sk.project.springboot_mvc_secure_app.entity.Role;
 import sk.project.springboot_mvc_secure_app.entity.User;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -36,8 +39,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAllActiveUsers() {
-        return userRepository.findAllByIsActiveTrue();
+    public List<AdminProfileDTO> findAllActiveUsers() {
+        List<User> usersList = userRepository.findAllByIsActiveTrue();
+
+        List<AdminProfileDTO> newUsersList = usersList.stream()
+                .map(user -> new AdminProfileDTO(user.getId(), user.getName(), user.getRole()))
+                .collect(Collectors.toList());
+
+        return newUsersList;
     }
 
     @Override

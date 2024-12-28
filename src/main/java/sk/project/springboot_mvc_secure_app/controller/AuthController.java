@@ -29,16 +29,8 @@ public class AuthController {
         return "register";
     }
 
-//    @RequestMapping("/error")
-//    public String handleError(Model model) {
-//        model.addAttribute("status", "Unknown Error");
-//        model.addAttribute("message", "An unexpected error occurred.");
-//
-//        Throwable throwable = (Throwable) model.asMap().get("javax.servlet.error.exception");
-//        if (throwable != null) {
-//            model.addAttribute("message", throwable.getMessage());
-//        }
-//
-//        return "error";
-//    }
+    @GetMapping("/notFound")
+    public String notFound() {
+        return "not-found";
+    }
 }

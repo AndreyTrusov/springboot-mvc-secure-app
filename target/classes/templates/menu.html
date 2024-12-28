@@ -14,19 +14,23 @@
                     <a class="nav-link" href="#">Locations</a>
                 </li>
                 <li class="nav-item"
-                    sec:authorize="hasAuthority('ROLE_USER')">
+                    sec:authorize="hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN', 'ROLE_CREATOR')">
                     <a class="nav-link" href="/user/profile">Profile</a>
+                </li>
+                <li class="nav-item"
+                    sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+                    <a class="nav-link" href="/admin/admin-profile">Admin Profile</a>
                 </li>
             </ul>
 
             <div class="ms-auto">
-                <form action="#" th:action="@{/logout}" method="POST" sec:authorize="hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN', 'ROLE_CREATOR')">
+                <form action="#" th:action="@{/logout}" sec:authorize="hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN', 'ROLE_CREATOR')">
                     <button class="btn btn-light btn-sm ms-auto" type="submit">
                         Log Out
                     </button>
                 </form>
 
-                <form action="#" th:action="@{/login}" method="POST" sec:authorize="isAnonymous()">
+                <form action="#" th:action="@{/login}" sec:authorize="isAnonymous()">
                     <button class="btn btn-light btn-sm ms-auto" type="submit">
                         Log In
                     </button>
