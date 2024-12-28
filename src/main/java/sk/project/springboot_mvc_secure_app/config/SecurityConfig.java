@@ -8,11 +8,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import sk.project.springboot_mvc_secure_app.service.UserServiceImpl;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.sql.DataSource;
 
 @Configuration
 public class SecurityConfig {
@@ -23,27 +23,23 @@ public class SecurityConfig {
     }
 
     @Bean
-    public InMemoryUserDetailsManager userDetailsManager() {
-        return new InMemoryUserDetailsManager();
-    }
+    public UserDetailsManager userDetailsManager(DataSource dataSource) {
 
+        JdbcUserDetailsManager manager = new JdbcUserDetailsManager(dataSource);
 
-    @Bean
-    public InMemoryUserDetailsManager preConfiguredUserDetailsManager(UserServiceImpl userServiceImpl) {
+        manager.setUsersByUsernameQuery(
+                "SELECT email AS username, password_hash AS password, is_active AS enabled " +
+                        "FROM user WHERE email = ?"
+        );
 
-//        List<UserDetails> users = userServiceImpl.findAllActiveUsers();
+        manager.setAuthoritiesByUsernameQuery(
+                "SELECT u.email AS username, r.role_name AS authority " +
+                        "FROM user u " +
+                        "JOIN role r ON u.role_id = r.role_id " +
+                        "WHERE u.email = ?"
+        );
 
-        List<UserDetails> users = new ArrayList<>();
-
-        UserDetails john = User.builder()
-                .username("john")
-                .password("{noop}test")
-                .roles("USER")
-                .build();
-
-        users.add(john);
-
-        return new InMemoryUserDetailsManager(users);
+        return manager;
     }
 
     @Bean
@@ -52,20 +48,19 @@ public class SecurityConfig {
         http.csrf().ignoringRequestMatchers("/register");
 
         http.authorizeHttpRequests(configurer -> configurer
-                                        .requestMatchers("/events/**", "/register/**").permitAll()
-//                                        .requestMatchers("/", "/events", "/register", "/css/**", "/js/**", "/images/**").permitAll()
-//                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                                        .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
-                                        .requestMatchers("/register/**").hasAnyRole("USER", "ADMIN")
-                                        .requestMatchers("/events/**").hasAnyRole("USER", "ADMIN")
-                                        .anyRequest().authenticated()
+                                .requestMatchers("/events/**", "/register/**").permitAll()
+                                .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN", "CREATOR")
+                                .requestMatchers("/register/**").hasAnyRole("USER", "ADMIN", "CREATOR")
+                                .requestMatchers("/events/**").hasAnyRole("USER", "ADMIN", "CREATOR")
+                                .requestMatchers("/error/**").hasAnyRole("USER", "ADMIN", "CREATOR")
+                                .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                                .loginPage("/login")
-                                .loginProcessingUrl("/authenticate")
-//                        .defaultSuccessUrl("/events")
-//                        .failureUrl("/login?error=true")
-                                .permitAll()
+                        .loginPage("/login")
+                        .loginProcessingUrl("/authenticate")
+                        .defaultSuccessUrl("/events")
+                        .failureUrl("/login?error=true")
+                        .permitAll()
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")

@@ -1,6 +1,8 @@
 package sk.project.springboot_mvc_secure_app.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,8 +31,15 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute("user") User user, @RequestParam String password_1, @RequestParam String password_2, Model model) {
-        userService.save(user, password_1, password_2);
+    public String registerUser(HttpServletRequest request, @ModelAttribute("user") User user, Model model, @RequestParam String password_1, @RequestParam String password_2) {
+
+        try{
+            userService.save(user, password_1, password_2, request);
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            model.addAttribute("user", user);
+            return "register";
+        }
 
         List<Event> publicEvents = eventService.findAllPublicEvents();
 

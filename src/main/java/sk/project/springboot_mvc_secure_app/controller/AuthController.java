@@ -1,19 +1,12 @@
 package sk.project.springboot_mvc_secure_app.controller;
 
-
-import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import sk.project.springboot_mvc_secure_app.entity.User;
-import sk.project.springboot_mvc_secure_app.service.UserService;
 
 @Controller
 public class AuthController {
-
 
     @GetMapping("/login")
     public String login() {
@@ -35,4 +28,17 @@ public class AuthController {
         model.addAttribute("user", new User());
         return "register";
     }
+
+//    @RequestMapping("/error")
+//    public String handleError(Model model) {
+//        model.addAttribute("status", "Unknown Error");
+//        model.addAttribute("message", "An unexpected error occurred.");
+//
+//        Throwable throwable = (Throwable) model.asMap().get("javax.servlet.error.exception");
+//        if (throwable != null) {
+//            model.addAttribute("message", throwable.getMessage());
+//        }
+//
+//        return "error";
+//    }
 }

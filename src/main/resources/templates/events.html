@@ -24,12 +24,17 @@
 <body>
 <div th:replace="~{menu :: menu}"></div>
 
-<!--Role(s): <span sec:authentication="principal.authorities"></span>-->
+<h1>Welcome, <span sec:authentication="name"></span></h1>
+<h2>Your roles:</h2>
+<ul>
+    <li sec:authorize="hasRole('ROLE_ADMIN')">Admin Role</li>
+    <li sec:authorize="hasRole('ROLE_USER')">User Role</li>
+    <li sec:authorize="hasRole('ROLE_MANAGER')">Manager Role</li>
+</ul>
 
 <div class="container">
-    <p class="text-center mt-3 text-success" th:if="${param.loggedin}">You have been registered</p>
     <h1 class="mb-4">Public Events</h1>
-
+    <p class="text-center mt-3 text-success" th:if="${param.loggedin}">You have been registered</p>
     <div class="row">
         <div th:each="event : ${events}" class="col-md-4">
             <div class="card shadow">

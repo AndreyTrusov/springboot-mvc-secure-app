@@ -34,6 +34,15 @@
         <h1 class="h4 mb-0">Login</h1>
     </div>
     <div class="card-body">
+
+        <div th:if="${param.error}" class="alert alert-danger" role="alert">
+            <span>Invalid username or password</span>
+        </div>
+
+        <div th:if="${param.logout}" class="alert alert-success" role="alert">
+            <span>You have been logged out</span>
+        </div>
+
         <form action="#" th:action="@{/authenticate}" method="POST">
             <div class="mb-3">
                 <label for="username" class="form-label">Username:</label>
@@ -47,8 +56,6 @@
                 <button type="submit" class="btn btn-primary">Login</button>
             </div>
         </form>
-        <p class="text-center mt-3 text-danger" th:if="${param.error}">Invalid username or password</p>
-        <p class="text-center mt-3 text-success" th:if="${param.logout}">You have been logged out</p>
     </div>
     <div class="card-footer">
         <p class="mb-2">Don't have an account?</p>

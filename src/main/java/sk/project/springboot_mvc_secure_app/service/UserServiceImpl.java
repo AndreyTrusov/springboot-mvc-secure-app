@@ -1,12 +1,13 @@
 package sk.project.springboot_mvc_secure_app.service;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.stereotype.Service;
 import sk.project.springboot_mvc_secure_app.dao.UserRepository;
 import sk.project.springboot_mvc_secure_app.entity.Role;
@@ -18,10 +19,6 @@ import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
-
-    @Autowired
-    @Qualifier("userDetailsManager")
-    private InMemoryUserDetailsManager userDetailsManager;
 
     @Autowired
     private UserRepository userRepository;
@@ -62,7 +59,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User save(User user, String password_1, String password_2) {
+    public User save(User user, String password_1, String password_2, HttpServletRequest request) {
 
         if (user == null) {
             throw new IllegalArgumentException("User object cannot be null");
@@ -87,17 +84,25 @@ public class UserServiceImpl implements UserService {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         newUser.setPasswordHash(passwordEncoder.encode(password_1));
 
-        UserDetails userDetails = org.springframework.security.core.userdetails.User.builder()
-                .username(user.getName())
-                .password("{bcrypt}" + newUser.getPasswordHash())
-                .roles("USER")
-                .build();
-
-        userDetailsManager.createUser(userDetails);
-
         newUser.setLastLogin(LocalDate.now());
         newUser.setRole(newRole);
+
+        authenticateUser(user, request);
+
         return userRepository.save(newUser);
+    }
+
+    private void authenticateUser(User user, HttpServletRequest request) {
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                user.getEmail(),
+                user.getPasswordHash(),
+                List.of(new SimpleGrantedAuthority("ROLE_USER"))
+        );
+
+        SecurityContextHolder.getContext().setAuthentication(authToken);
+
+        HttpSession session = request.getSession(true);
+        session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
     }
 
     @Override

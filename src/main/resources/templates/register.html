@@ -34,6 +34,11 @@
         <h1 class="h4 mb-0">Register</h1>
     </div>
     <div class="card-body">
+
+        <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+            <span th:text="${errorMessage}"></span>
+        </div>
+
         <form action="/register" method="POST">
             <div class="mb-3">
                 <label for="name" class="form-label">Name:</label>
