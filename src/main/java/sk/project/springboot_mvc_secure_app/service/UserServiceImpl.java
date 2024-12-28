@@ -9,6 +9,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import sk.project.springboot_mvc_secure_app.dto.UserPasswordDTO;
+import sk.project.springboot_mvc_secure_app.dto.UserProfileDTO;
 import sk.project.springboot_mvc_secure_app.dao.UserRepository;
 import sk.project.springboot_mvc_secure_app.entity.Role;
 import sk.project.springboot_mvc_secure_app.entity.User;
@@ -53,7 +55,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findByEmail(String email) {
+    public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
@@ -69,7 +71,7 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("Passwords do not match");
         }
 
-        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+        if (userRepository.findByEmail(user.getEmail()) != null) {
             throw new IllegalArgumentException("Email is already in use");
         }
 
@@ -90,6 +92,46 @@ public class UserServiceImpl implements UserService {
         authenticateUser(user, request);
 
         return userRepository.save(newUser);
+    }
+
+    @Override
+    @Transactional
+    public boolean updateUser(UserProfileDTO user) {
+
+        if (user == null) {
+            throw new IllegalArgumentException("User object cannot be null");
+        }
+
+        UserProfileDTO newUser = new UserProfileDTO();
+
+        newUser.setId(user.getId());
+        newUser.setName(user.getName());
+        newUser.setPhoneNumber(user.getPhoneNumber());
+        newUser.setCompany(user.getCompany());
+        newUser.setJobTitle(user.getJobTitle());
+        newUser.setAddress(user.getAddress());
+        newUser.setDateOfBirth(user.getDateOfBirth());
+        newUser.setGender(user.getGender());
+
+        return userRepository.updateUser(newUser) == 1;
+    }
+
+    @Override
+    @Transactional
+    public boolean updateUserPassword(UserPasswordDTO userPasswordDTO) {
+
+        if (userPasswordDTO == null) {
+            throw new IllegalArgumentException("User object cannot be null");
+        }
+
+        UserPasswordDTO newUser = new UserPasswordDTO();
+
+        newUser.setId(userPasswordDTO.getId());
+
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        newUser.setPasswordHash(passwordEncoder.encode(userPasswordDTO.getNewPassword()));
+
+        return userRepository.updateUserPassword(newUser) == 1;
     }
 
     private void authenticateUser(User user, HttpServletRequest request) {

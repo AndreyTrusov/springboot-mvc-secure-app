@@ -1,6 +1,8 @@
 package sk.project.springboot_mvc_secure_app.service;
 
 import jakarta.servlet.http.HttpServletRequest;
+import sk.project.springboot_mvc_secure_app.dto.UserPasswordDTO;
+import sk.project.springboot_mvc_secure_app.dto.UserProfileDTO;
 import sk.project.springboot_mvc_secure_app.entity.User;
 
 import java.util.List;
@@ -10,8 +12,10 @@ public interface UserService {
     List<User> findAll();
     List<User> findAllActiveUsers();
     Optional<User> findById(Long id);
-    Optional<User> findByEmail(String email);
+    User findByEmail(String email);
     User findByName(String name);
     User save(User user, String password_1, String password_2, HttpServletRequest request);
+    boolean updateUser(UserProfileDTO user);
+    boolean updateUserPassword(UserPasswordDTO userPasswordDTO);
     boolean deleteById(Long id);
 }

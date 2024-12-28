@@ -24,13 +24,13 @@
 <body>
 <div th:replace="~{menu :: menu}"></div>
 
-<h1>Welcome, <span sec:authentication="name"></span></h1>
-<h2>Your roles:</h2>
-<ul>
-    <li sec:authorize="hasRole('ROLE_ADMIN')">Admin Role</li>
-    <li sec:authorize="hasRole('ROLE_USER')">User Role</li>
-    <li sec:authorize="hasRole('ROLE_MANAGER')">Manager Role</li>
-</ul>
+<!--<h1>Welcome, <span sec:authentication="name"></span></h1>-->
+<!--<h2>Your roles:</h2>-->
+<!--<ul>-->
+<!--    <li sec:authorize="hasRole('ROLE_ADMIN')">Admin Role</li>-->
+<!--    <li sec:authorize="hasRole('ROLE_USER')">User Role</li>-->
+<!--    <li sec:authorize="hasRole('ROLE_MANAGER')">Manager Role</li>-->
+<!--</ul>-->
 
 <div class="container">
     <h1 class="mb-4">Public Events</h1>

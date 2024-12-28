@@ -46,6 +46,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.csrf().ignoringRequestMatchers("/register");
+        http.csrf().ignoringRequestMatchers("/user");
 
         http.authorizeHttpRequests(configurer -> configurer
                                 .requestMatchers("/events/**", "/register/**").permitAll()

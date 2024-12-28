@@ -24,7 +24,6 @@ public class User {
     @Column(name = "email", unique = true)
     private String email;
 
-    @NotBlank(message = "Password is required")
     @Column(name = "password_hash")
     private String passwordHash;
 

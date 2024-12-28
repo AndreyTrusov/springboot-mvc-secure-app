@@ -20,7 +20,7 @@
             </ul>
 
             <div class="ms-auto">
-                <form action="#" th:action="@{/logout}" method="POST" sec:authorize="hasAuthority('ROLE_USER')">
+                <form action="#" th:action="@{/logout}" method="POST" sec:authorize="hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN', 'ROLE_CREATOR')">
                     <button class="btn btn-light btn-sm ms-auto" type="submit">
                         Log Out
                     </button>
