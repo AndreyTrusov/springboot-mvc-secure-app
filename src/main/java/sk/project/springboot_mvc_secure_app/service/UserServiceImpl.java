@@ -3,12 +3,14 @@ package sk.project.springboot_mvc_secure_app.service;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import jakarta.servlet.http.HttpServletRequest;
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import sk.project.springboot_mvc_secure_app.dao.RoleRepository;
 import sk.project.springboot_mvc_secure_app.dto.AdminProfileDTO;
 import sk.project.springboot_mvc_secure_app.dto.UserPasswordDTO;
 import sk.project.springboot_mvc_secure_app.dto.UserProfileDTO;
@@ -17,7 +19,6 @@ import sk.project.springboot_mvc_secure_app.entity.Role;
 import sk.project.springboot_mvc_secure_app.entity.User;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,6 +28,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
@@ -123,6 +127,32 @@ public class UserServiceImpl implements UserService {
         newUser.setGender(user.getGender());
 
         return userRepository.updateUser(newUser) == 1;
+    }
+
+    @Override
+    @Transactional
+    public boolean updateUserRole(Long id, String role) {
+        try {
+            Optional<User> userOptional = userRepository.findById(id);
+            if (!userOptional.isPresent()) {
+                return false;
+            }
+
+            User user = userOptional.get();
+
+            Role newRole = roleRepository.findByRoleName("ROLE_" + role.toUpperCase());
+            if (newRole == null) {
+                return false;
+            }
+
+            user.setRole(newRole);
+            userRepository.updateUserRole(user.getId(), user.getRole().getRoleId());
+
+            return true;
+
+        } catch (Exception ex) {
+            throw new ServiceException("Unexpected error occurred while updating user role."+ex.getMessage(), ex);
+        }
     }
 
     @Override

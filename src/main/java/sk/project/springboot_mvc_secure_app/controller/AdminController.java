@@ -1,9 +1,6 @@
 package sk.project.springboot_mvc_secure_app.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,14 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import sk.project.springboot_mvc_secure_app.dto.AdminProfileDTO;
 import sk.project.springboot_mvc_secure_app.dto.UserPasswordDTO;
-import sk.project.springboot_mvc_secure_app.dto.UserProfileDTO;
-import sk.project.springboot_mvc_secure_app.entity.Event;
-import sk.project.springboot_mvc_secure_app.entity.User;
-import sk.project.springboot_mvc_secure_app.service.EventService;
 import sk.project.springboot_mvc_secure_app.service.UserService;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -41,19 +35,23 @@ public class AdminController {
         return "admin/admin-profile";
     }
 
-//    @PostMapping("/admin/updateUserRole")
-//    public String updateUserProfile(@Validated @ModelAttribute("user") AdminProfileDTO user,
-//                                    BindingResult bindingResult, Model model) {
-//        if (bindingResult.hasErrors()) {
-//            model.addAttribute("userPasswordDTO", new UserPasswordDTO());
-//            return "redirect:/user/profile?error";
-//        }
-//        if (userService.updateUser(user)) {
-//            return "redirect:/user/profile?edit_profile_updated";
-//        } else {
-//            return "redirect:/user/profile?edit_profile_fail";
-//        }
+    @PostMapping("/admin/updateUserRole")
+    public String updateUserRole(@RequestParam("id") Long id,
+                                 @RequestParam("role") String role,
+                                 RedirectAttributes redirectAttributes) {
 
-//        return "admin/admin-profile";
-//    }
+        try {
+            boolean updated = userService.updateUserRole(id, role);
+
+            if (updated) {
+                redirectAttributes.addFlashAttribute("success", "User role updated successfully!");
+            } else {
+                redirectAttributes.addFlashAttribute("error", "Failed to update user role.");
+            }
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "An error occurred: " + e.getMessage());
+        }
+
+        return "redirect:/admin/admin-profile";
+    }
 }

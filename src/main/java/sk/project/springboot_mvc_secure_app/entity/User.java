@@ -27,7 +27,7 @@ public class User {
     @Column(name = "password_hash")
     private String passwordHash;
 
-    @Pattern(regexp = "^[+\\d]{1,3}[\\s\\d]*$", message = "Phone number should be valid")
+    //@Pattern(regexp = "^[+\\d]{1,3}[\\s\\d]*$", message = "Phone number should be valid")
     @Column(name = "phone_number")
     private String phoneNumber;
 
@@ -99,11 +99,19 @@ public class User {
         this.passwordHash = passwordHash;
     }
 
-    public @Pattern(regexp = "^[+\\d]{1,3}[\\s\\d]*$", message = "Phone number should be valid") String getPhoneNumber() {
+//    public @Pattern(regexp = "^[+\\d]{1,3}[\\s\\d]*$", message = "Phone number should be valid") String getPhoneNumber() {
+//        return phoneNumber;
+//    }
+//
+//    public void setPhoneNumber(@Pattern(regexp = "^[+\\d]{1,3}[\\s\\d]*$", message = "Phone number should be valid") String phoneNumber) {
+//        this.phoneNumber = phoneNumber;
+//    }
+
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(@Pattern(regexp = "^[+\\d]{1,3}[\\s\\d]*$", message = "Phone number should be valid") String phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

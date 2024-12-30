@@ -17,6 +17,7 @@ public interface UserService {
     User findByName(String name);
     User save(User user, String password_1, String password_2, HttpServletRequest request);
     boolean updateUser(UserProfileDTO user);
+    boolean updateUserRole(Long id, String role);
     boolean updateUserPassword(UserPasswordDTO userPasswordDTO);
     boolean deleteById(Long id);
 }
