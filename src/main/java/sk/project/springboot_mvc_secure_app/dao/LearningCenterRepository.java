@@ -8,6 +8,7 @@ import java.util.List;
 
 @Repository
 public interface LearningCenterRepository extends JpaRepository<LearningCenter, Long> {
+    List<LearningCenter> findAll();
     List<LearningCenter> findByCapacityGreaterThan(int capacity);
     LearningCenter findByName(String name);
 }

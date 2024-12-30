@@ -50,8 +50,9 @@ public class SecurityConfig {
 //        http.csrf().ignoringRequestMatchers("/admin");
 
         http.authorizeHttpRequests(configurer -> configurer
-                                .requestMatchers("/events/**", "/register/**", "/not-found").permitAll()
+                                .requestMatchers("/events/**", "/register/**", "/not-found", "/locations/**").permitAll()
                                 .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN", "CREATOR")
+//                                .requestMatchers("/locations/**").hasAnyRole("USER", "ADMIN", "CREATOR")
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
 //                                .requestMatchers("/register/**").hasAnyRole("USER", "ADMIN", "CREATOR")
 //                                .requestMatchers("/events/**").hasAnyRole("USER", "ADMIN", "CREATOR")

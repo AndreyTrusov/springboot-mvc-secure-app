@@ -12,7 +12,8 @@ import java.util.Optional;
 @Service
 public class LearningCenterServiceImpl implements LearningCenterService {
 
-    private final LearningCenterRepository learningCenterRepository;
+    @Autowired
+    private LearningCenterRepository learningCenterRepository;
 
     @Autowired
     public LearningCenterServiceImpl(LearningCenterRepository learningCenterRepository) {
