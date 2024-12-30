@@ -13,4 +13,5 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     List<Event> findByCreatedBy(Long userId);
     List<Event> findByIsPrivateTrue();
     List<Event> findByName(String name);
+    Event save(Event event);
 }

@@ -2,10 +2,15 @@ package sk.project.springboot_mvc_secure_app.service;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import sk.project.springboot_mvc_secure_app.dao.EventRepository;
+import sk.project.springboot_mvc_secure_app.dao.UserRepository;
 import sk.project.springboot_mvc_secure_app.entity.Event;
+import sk.project.springboot_mvc_secure_app.entity.User;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +19,8 @@ public class EventServiceImpl implements EventService {
 
     @Autowired
     private EventRepository eventRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public List<Event> findAllPublicEvents() {
@@ -53,7 +60,40 @@ public class EventServiceImpl implements EventService {
         if (event == null) {
             throw new IllegalArgumentException("Event object cannot be null");
         }
-        return eventRepository.save(event);
+
+        String currentUserEmail = null;
+
+        try {
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+            if (principal instanceof UserDetails) {
+                UserDetails userDetails = (UserDetails) principal;
+                currentUserEmail = userDetails.getUsername();
+            } else if (principal instanceof String) {
+                currentUserEmail = (String) principal;
+            } else {
+                throw new IllegalStateException("Authenticated principal is not of type UserDetails or String");
+            }
+        } catch (Exception e) {
+            throw new IllegalStateException("Error retrieving user email from security context +" + e, e);
+        }
+
+        if (currentUserEmail == null || currentUserEmail.isEmpty()) {
+            throw new IllegalStateException("Authenticated user email is null or empty");
+        }
+
+        User currentUser = userRepository.findByEmail(currentUserEmail);
+        if (currentUser == null) {
+            throw new IllegalStateException("Authenticated user not found in the database");
+        }
+
+        Event savedEvent = new Event();
+        savedEvent.setCreatedAt(LocalDate.now());
+        savedEvent.setName(event.getName());
+        savedEvent.setDescription(event.getDescription());
+        savedEvent.setCreatedBy(currentUser.getId());
+
+        return eventRepository.save(savedEvent);
     }
 
     @Override
