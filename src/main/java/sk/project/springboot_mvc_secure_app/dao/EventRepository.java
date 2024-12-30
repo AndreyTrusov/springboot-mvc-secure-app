@@ -9,6 +9,8 @@ import java.util.List;
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long> {
     List<Event> findByIsPrivateFalse();
+    List<Event> findByNameContainingIgnoreCase(String name);
     List<Event> findByCreatedBy(Long userId);
     List<Event> findByIsPrivateTrue();
+    List<Event> findByName(String name);
 }

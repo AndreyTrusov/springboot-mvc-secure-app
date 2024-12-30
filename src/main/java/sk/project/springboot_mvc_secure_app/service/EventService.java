@@ -10,6 +10,7 @@ public interface EventService {
     List<Event> findAllPrivateEvents();
     List<Event> findByCreatedBy(Long userId);
     Optional<Event> findById(Long id);
+    List<Event> findByName(String name);
     Event save(Event event);
     boolean deleteById(Long id);
 }

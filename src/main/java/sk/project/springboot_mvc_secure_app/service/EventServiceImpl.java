@@ -12,12 +12,8 @@ import java.util.Optional;
 @Service
 public class EventServiceImpl implements EventService {
 
-    private final EventRepository eventRepository;
-
     @Autowired
-    public EventServiceImpl(EventRepository eventRepository) {
-        this.eventRepository = eventRepository;
-    }
+    private EventRepository eventRepository;
 
     @Override
     public List<Event> findAllPublicEvents() {
@@ -44,6 +40,11 @@ public class EventServiceImpl implements EventService {
         }
 
         return eventRepository.findById(id);
+    }
+
+    @Override
+    public List<Event> findByName(String name) {
+        return eventRepository.findByNameContainingIgnoreCase(name);
     }
 
     @Override
