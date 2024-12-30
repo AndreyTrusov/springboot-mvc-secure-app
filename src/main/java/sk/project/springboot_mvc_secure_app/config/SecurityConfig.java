@@ -3,11 +3,8 @@ package sk.project.springboot_mvc_secure_app.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -45,24 +42,16 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-//        http.csrf().ignoringRequestMatchers("/register");
-//        http.csrf().ignoringRequestMatchers("/user");
-//        http.csrf().ignoringRequestMatchers("/admin");
-
         http.authorizeHttpRequests(configurer -> configurer
                                 .requestMatchers("/event/**", "/register/**", "/not-found", "/locations/**").permitAll()
                                 .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN", "CREATOR")
-//                                .requestMatchers("/locations/**").hasAnyRole("USER", "ADMIN", "CREATOR")
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
-//                                .requestMatchers("/register/**").hasAnyRole("USER", "ADMIN", "CREATOR")
-//                                .requestMatchers("/events/**").hasAnyRole("USER", "ADMIN", "CREATOR")
-//                                .requestMatchers("/error/**").hasAnyRole("USER", "ADMIN", "CREATOR")
                                 .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/authenticate")
-                        .defaultSuccessUrl("/events")
+                        .defaultSuccessUrl("/event/events")
                         .failureUrl("/login?error=true")
                         .permitAll()
                 )

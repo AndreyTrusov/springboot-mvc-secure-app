@@ -9,7 +9,6 @@ import sk.project.springboot_mvc_secure_app.entity.Event;
 import sk.project.springboot_mvc_secure_app.service.EventService;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class EventsController {

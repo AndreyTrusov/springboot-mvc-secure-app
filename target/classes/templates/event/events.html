@@ -40,6 +40,8 @@
 <div th:replace="~{menu :: menu}"></div>
 
 <div class="container">
+    <p class="text-center mt-3 text-success" th:if="${param.loggedin}">You have been registered</p>
+
     <h1 class="mb-4">Public Events</h1>
 
     <form method="get" action="/event/search" class="mb-4">
@@ -53,7 +55,6 @@
         <a href="/event/create-event" class="btn btn-primary">Create New Event</a>
     </div>
 
-    <p class="text-center mt-3 text-success" th:if="${param.loggedin}">You have been registered</p>
 
     <div class="row">
         <div th:if="${events.isEmpty()}" class="text-center">

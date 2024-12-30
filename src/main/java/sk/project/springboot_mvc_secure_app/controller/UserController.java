@@ -71,7 +71,6 @@ public class UserController {
         }
 
         if (!userPasswordDTO.getNewPassword().equals(userPasswordDTO.getConfirmPassword())) {
-//            bindingResult.rejectValue("confirmPassword", "error.passwordChangeDTO", "Passwords do not match");
             redirectAttributes.addFlashAttribute("passwordChangeError", "Passwords do not match");
             return "redirect:/user/profile?error";
         }
@@ -102,7 +101,7 @@ public class UserController {
 
         model.addAttribute("events", publicEvents);
 
-        return "redirect:/events?loggedin=true";
+        return "redirect:/event/events?loggedin=true";
     }
 
 }
