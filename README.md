@@ -47,7 +47,10 @@ spring.datasource.username=root
 spring.datasource.password=
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver`
 
-3. Build the Project
+3. Build the Project and configurate database:
+
+   [Uploading mvcproject_1.sql…]()
+
 Use Maven to build the project:
 
 `mvn clean install
