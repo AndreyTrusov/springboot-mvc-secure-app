@@ -47,11 +47,16 @@ spring.datasource.username=root
 spring.datasource.password=
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver`
 
-3. Build the Project
+3. Build the Project and configurate database:
+
+find .sql to configurate database.
+
 Use Maven to build the project:
 
 `mvn clean install
 mvn spring-boot:run`
 
-5. Access the Application
+4. Access the Application
 Login: Navigate to http://localhost:8080
+
+Admin account - e@e:111 Or change it in database.
