@@ -49,7 +49,7 @@ spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver`
 
 3. Build the Project and configurate database:
 
-   [Uploading mvcproject_1.sql…]()
+find .sql to configurate database.
 
 Use Maven to build the project:
 
